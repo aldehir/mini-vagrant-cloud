@@ -15,7 +15,7 @@ func CreateBoxServer(addr string) *BoxServer {
 	serveMux := http.NewServeMux()
 	server := &http.Server{Addr: addr, Handler: serveMux}
 
-	boxServer := &BoxServer{server, serveMux, CreateRouter()}
+	boxServer := &BoxServer{server, serveMux, NewRouter()}
 	boxServer.createRoutes()
 
 	return boxServer

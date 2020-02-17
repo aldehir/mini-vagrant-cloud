@@ -25,7 +25,7 @@ func TestRouter(t *testing.T) {
 		}
 	}
 
-	router := CreateRouter()
+	router := NewRouter()
 	router.HandleFunc("^/hello/(?P<name>[^/]+)/?$", handler)
 
 	recorder := httptest.NewRecorder()

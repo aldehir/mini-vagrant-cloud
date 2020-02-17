@@ -16,14 +16,14 @@ type routerRule struct {
 	handler http.Handler
 }
 
-func CreateRouter() *Router {
+func NewRouter() *Router {
 	return &Router{
 		NotFoundHandler: http.NotFoundHandler(),
 		rules: []*routerRule{},
 	}
 }
 
-func createRouterRule(pattern string, handler http.Handler) (*routerRule, error) {
+func newRouterRule(pattern string, handler http.Handler) (*routerRule, error) {
 	compiled, err := regexp.Compile(pattern)
 
 	if err != nil {
@@ -34,7 +34,7 @@ func createRouterRule(pattern string, handler http.Handler) (*routerRule, error)
 }
 
 func (r *Router) Handle(pattern string, handler http.Handler) {
-	rule, err := createRouterRule(pattern, handler)
+	rule, err := newRouterRule(pattern, handler)
 	if err != nil {
 		panic(err)
 	}
