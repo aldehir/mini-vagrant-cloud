@@ -9,7 +9,7 @@ import (
 func TestRouter(t *testing.T) {
 	called := false
 
-	handler := func (w http.ResponseWriter, r *http.Request) {
+	handler := func(w http.ResponseWriter, r *http.Request) {
 		called = true
 
 		params := r.Context().Value("params").(map[string]string)

@@ -7,7 +7,7 @@ import (
 )
 
 type Router struct {
-	rules []*routerRule
+	rules           []*routerRule
 	NotFoundHandler http.Handler
 }
 
@@ -19,7 +19,7 @@ type routerRule struct {
 func NewRouter() *Router {
 	return &Router{
 		NotFoundHandler: http.NotFoundHandler(),
-		rules: []*routerRule{},
+		rules:           []*routerRule{},
 	}
 }
 

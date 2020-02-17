@@ -6,9 +6,9 @@ import (
 )
 
 type BoxServer struct {
-	server *http.Server
+	server   *http.Server
 	serveMux *http.ServeMux
-	router *Router
+	router   *Router
 }
 
 func NewBoxServer(addr string) *BoxServer {
