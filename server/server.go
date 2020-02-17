@@ -11,7 +11,7 @@ type BoxServer struct {
 	router *Router
 }
 
-func CreateBoxServer(addr string) *BoxServer {
+func NewBoxServer(addr string) *BoxServer {
 	serveMux := http.NewServeMux()
 	server := &http.Server{Addr: addr, Handler: serveMux}
 

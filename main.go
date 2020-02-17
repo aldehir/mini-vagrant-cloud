@@ -6,6 +6,6 @@ import (
 )
 
 func main() {
-	s := server.CreateBoxServer(":8080")
+	s := server.NewBoxServer(":8080")
 	log.Fatal(s.ListenAndServe())
 }
