@@ -37,3 +37,54 @@ func TestRouter(t *testing.T) {
 		t.Error("Handler function not called")
 	}
 }
+
+func TestRouterFallthrough(t *testing.T) {
+	helloCalled := false
+	goodbyeCalled := false
+	noopCalled := false
+
+	noopHandler := func(w http.ResponseWriter, r *http.Request) {
+		noopCalled = true
+	}
+
+	helloHandler := func(w http.ResponseWriter, r *http.Request) {
+		helloCalled = true
+	}
+
+	goodbyeHandler := func(w http.ResponseWriter, r *http.Request) {
+		goodbyeCalled = true
+	}
+
+	router := NewRouter()
+	router.HandleFunc("^/goodbye/(?P<name>[^/]+)/?$", goodbyeHandler)
+	router.HandleFunc("^/hello/(?P<name>[^/]+)/?$", helloHandler)
+	router.HandleFunc("^/(?P<name>[^/]+)/?$", noopHandler)
+
+	recorder := httptest.NewRecorder()
+	request := httptest.NewRequest("GET", "http://localhost/hello/aldehir", nil)
+
+	router.ServeHTTP(recorder, request)
+
+	if !helloCalled {
+		t.Error("Hello handler not called")
+	}
+
+	if noopCalled || goodbyeCalled {
+		t.Error("Other handlers were called")
+	}
+
+	recorder = httptest.NewRecorder()
+	request = httptest.NewRequest("GET", "http://localhost/goodbye/aldehir", nil)
+
+	helloCalled = false
+
+	router.ServeHTTP(recorder, request)
+
+	if !goodbyeCalled {
+		t.Error("Goodbye Handler not called")
+	}
+
+	if noopCalled || helloCalled {
+		t.Error("Other handlers were called")
+	}
+}
